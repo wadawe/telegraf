@@ -28,6 +28,11 @@ func (h *httpClient) Connect(cfg *clientConfig) error {
 	h.compress = cfg.Compression
 	h.headers = cfg.Headers
 
+	proxyFunc, err := cfg.HTTPProxy.Proxy()
+	if err != nil {
+		return fmt.Errorf("creating proxy failed: %w", err)
+	}
+
 	tlsConfig, err := cfg.TLSConfig.TLSConfig()
 	if err != nil {
 		return err
@@ -41,7 +46,7 @@ func (h *httpClient) Connect(cfg *clientConfig) error {
 	if tlsConfig != nil {
 		h.httpClient.Transport = &http.Transport{
 			TLSClientConfig: tlsConfig,
-			Proxy:           http.ProxyFromEnvironment,
+			Proxy:           proxyFunc,
 		}
 	}
 

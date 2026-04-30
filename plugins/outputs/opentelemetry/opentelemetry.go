@@ -52,8 +52,8 @@ type clientConfig struct {
 	TLSConfig       *tls.ClientConfig
 	Compression     string
 	CoralogixConfig *CoralogixConfig
-	HTTPProxy       *proxy.HTTPProxy
-	TCPProxy        *proxy.TCPProxy
+	HTTPProxy       *proxy.HTTPProxy  // only for HTTP client
+	TCPProxy        *proxy.TCPProxy   // only for gRPC client
 	Encoding        string            // only for HTTP client
 	Headers         map[string]string // only for HTTP client, gRPC client uses metadata
 }

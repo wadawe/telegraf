@@ -3,6 +3,7 @@ package opentelemetry
 import (
 	"context"
 	ntls "crypto/tls"
+	"fmt"
 	"net"
 
 	"go.opentelemetry.io/collector/pdata/pmetric/pmetricotlp"
@@ -32,7 +33,7 @@ func (g *gRPCClient) Connect(cfg *clientConfig) error {
 
 	dialer, err := cfg.TCPProxy.Proxy()
 	if err != nil {
-		return err
+		return fmt.Errorf("creating proxy failed: %w", err)
 	}
 
 	grpcDialOption := grpc.WithContextDialer(func(ctx context.Context, addr string) (net.Conn, error) {

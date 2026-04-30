@@ -41,6 +41,7 @@ func (h *httpClient) Connect(cfg *clientConfig) error {
 	if tlsConfig != nil {
 		h.httpClient.Transport = &http.Transport{
 			TLSClientConfig: tlsConfig,
+			Proxy:           http.ProxyFromEnvironment,
 		}
 	}
 
